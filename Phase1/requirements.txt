@@ -1,0 +1,5 @@
+
+pickleshare==0.7.5 
+numpy==1.19.2 
+skl2onnx==1.11.1 
+sklearn==0.22.2.post1

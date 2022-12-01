@@ -45,11 +45,11 @@ clustering_labels = {
 class JSModel_ONNX(object):
     def __init__(self):
 # classification_test.onnx
-        self.sess_classification = rt.InferenceSession("/Users/sashanksilwal/Developer/Capstone/Phase2_ComparingOutputs_Benchmarking/models//classification_test.onnx")
+        self.sess_classification = rt.InferenceSession("/Users/sashanksilwal/Developer/Capstone/Phase2_ComparingOutputs_Benchmarking/models/classification_test.onnx")
         self.sess_clustering = rt.InferenceSession("/Users/sashanksilwal/Developer/Capstone/Phase2_ComparingOutputs_Benchmarking/models//clustering_test.onnx")
 
-        self.sess_classification_tfidf = rt.InferenceSession("/Users/sashanksilwal/Developer/Capstone/Phase2_ComparingOutputs_Benchmarking/models//classification_tfidf_test.onnx")
-        self.sess_clustering_tfidf = rt.InferenceSession("/Users/sashanksilwal/Developer/Capstone/Phase2_ComparingOutputs_Benchmarking/models//clustering_tfidf_test.onnx")
+        self.sess_classification_tfidf = rt.InferenceSession("/Users/sashanksilwal/Developer/Capstone/Phase2_ComparingOutputs_Benchmarking/models/classification_tfidf_test.onnx")
+        self.sess_clustering_tfidf = rt.InferenceSession("/Users/sashanksilwal/Developer/Capstone/Phase2_ComparingOutputs_Benchmarking/models/clustering_tfidf_test.onnx")
 
         with open("/Users/sashanksilwal/Developer/Capstone/Phase2_ComparingOutputs_Benchmarking/classification_features.json") as f:
             self.classification_features = json.loads(f.read())["features"]
@@ -62,9 +62,9 @@ class JSModel_ONNX(object):
         for feature in self.classification_features:
             tmp = feature.split("|")
             self.classification_kws += tmp
-        print("Len classification_kws",len(self.classification_kws))
         self.classification_kws = list(set(self.classification_kws))
-        print(len(self.classification_kws))
+        print(self.classification_kws)
+
         self.clustering_kws = []
         for feature in self.clustering_features:
             tmp = feature.split("|")
@@ -74,28 +74,16 @@ class JSModel_ONNX(object):
     def get_scripts_features(self, data, kws, features):
         resultant_features = []
         scripts_kws = []
-         
-        
         for kw in kws:
-             
             scripts_kws += [kw]*data.count("."+kw+"(")
-            # scripts_kws += [kw]*data.count("."+kw+" (")
-
-       
+            scripts_kws += [kw]*data.count("."+kw+" (")
         for ft in features:
             if "|" not in ft:
                 resultant_features += [ft]*scripts_kws.count(ft)
-                 
             else:
                 singular_kws = ft.split("|")
-                 
-                print("singular_kws", singular_kws)
-                print(len([ele for ele in singular_kws if ele in scripts_kws]), len(singular_kws))
                 if len([ele for ele in singular_kws if ele in scripts_kws]) == len(singular_kws):
                     resultant_features += [ft]
-
-        
-        print("resultant_features", resultant_features)
         return resultant_features
 
     def get_scripts_classification_features(self, data):
@@ -114,17 +102,13 @@ class JSModel_ONNX(object):
         
         script = re.sub("\s+", " ", script)
         reduced_script = self.get_scripts_classification_features(script)
-        print("reduced", reduced_script)
-        print("reduced script",  np.array([reduced_script]).reshape(1,1))
-
         tfidf_representation = self.sess_classification_tfidf.run(None, {"float_input": np.array([reduced_script]).reshape(1,1)})[0]
         prediction = self.sess_classification.run(None, {'float_input': tfidf_representation.astype(np.float32)})[0] 
         
-
         # Max Probability
         onx_pred = self.sess_classification.run(None, {'float_input': tfidf_representation.astype(np.float32)})[1] 
         df = pd.DataFrame(onx_pred)
-        print(df)
+
         if df.values.max() > 0.8:
             return classification_labels[str(prediction[0])] 
         else:
@@ -157,3 +141,4 @@ class JSModel_ONNX(object):
         prediction = self.sess_clustering.run(None, {'float_input': tfidf_representation.astype(np.float32)})[0]   
         return clustering_labels[str(prediction[0])]
         
+
