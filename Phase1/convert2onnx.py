@@ -3,9 +3,7 @@ import pickle
 import numpy as np
 
 from skl2onnx import convert_sklearn
-from skl2onnx.common.data_types import FloatTensorType, StringTensorType
-from skl2onnx.common.data_types import DoubleTensorType, Int64TensorType
-from sklearn.feature_extraction.text import TfidfVectorizer
+from skl2onnx.common.data_types import FloatTensorType 
 
 # main function takes the file name to convert to onnx
 def main(filename, num_features=1000, input_name='float_input', output_name='output', file_path_classification="./models"):
@@ -23,4 +21,4 @@ def main(filename, num_features=1000, input_name='float_input', output_name='out
 #  take the file name as input from the command line
 if __name__ == "__main__":
     import sys
-    main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])

@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ### Run
 
 ```bash
-python convert2onnx.py <filename> <input_name> <output_name> <path_output>
+python convert2onnx.py <filename> <num_features> <input_name> <output_name> <path_output>
 ```
 
 - filename: the name of the model file
@@ -32,5 +32,5 @@ python convert2onnx.py <filename> <input_name> <output_name> <path_output>
 ### Example
 
 ```bash
-python convert2onnx.py model.pkl input output ./model
+python convert2onnx.py model.pkl 1000 float_input output ./model
 ```
