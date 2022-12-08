@@ -261,6 +261,7 @@ std::pair<int, float> predict(std::string script, std::unordered_set<std::string
 
     float* values_ret;
     int max = 0;
+    float max_val = 0;
     try {
         // Running the inference
         input_node_dims_tfidf = {1, 1};
@@ -305,11 +306,13 @@ std::pair<int, float> predict(std::string script, std::unordered_set<std::string
         int64_t* keys_ret = keys_ort.GetTensorMutableData<int64_t>();
         Ort::Value values_ort = map_out.GetValue(1, allocator);
         values_ret = values_ort.GetTensorMutableData<float>();
-       
+        max_val = values_ret[0];
         for (int i = 0; i < 12; i++) {
-            // std::cout << "Score for class [" << i << "] =  " << values_ret[i] << '\n';
+            
             if (values_ret[i] > values_ret[max]) {
+                // std::cout << "Score for class [" << i << "] =  " << values_ret[i] << '\n';
                 max = i;  
+                max_val = values_ret[i];
             }
         }
      
@@ -319,7 +322,7 @@ std::pair<int, float> predict(std::string script, std::unordered_set<std::string
     }
    
     // return the index of the highest score and the score 
-    return std::make_pair(max, values_ret[max]);
+    return std::make_pair(max, max_val);
   
    
 }
@@ -401,7 +404,7 @@ int main() {
         //get the file name
         std::string file_ = entry.path();
         std::string file_name = file_.substr(file_.find_last_of("/\\") + 1);
-        std::cout << "file_name "<<file_name << std::endl;
+        // std::cout << "file_name "<<file_name << std::endl;
         // cout << "[" << classification_labels[index.first] << "," << file_name<<","<< index.second <<"]"<< '\n';
         outfile   << file_name <<","<< classification_labels[index.first] << "," << index.second  << '\n';
 
@@ -415,4 +418,3 @@ int main() {
     return 0;
 
 }
-
