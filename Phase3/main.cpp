@@ -37,18 +37,23 @@ std::vector<std::string> get_scripts_features(std::string data, std::unordered_s
     string data. If a keyword is found in data, it is added to a list of keywords called scripts_kws. The code does this by iterating 
     through data one character at a time and checking for a match with the keyword. If a match is found, the keyword is added to scripts_kws.*/
     for (auto& kw : kws) {
-        // remove spaces from kw
+         
+        // Remove spaces from kw
         std::string kw_no_spaces = kw;
         kw_no_spaces.erase(std::remove(kw_no_spaces.begin(), kw_no_spaces.end(), ' '), kw_no_spaces.end());
         std::string kw1 = "." + kw_no_spaces + "(";
 
-        int count = 0;
+        // Find the first occurrence of kw1 in data
         size_t pos = data.find(kw1);
+
+        // Count the number of occurrences of kw1 in data
+        int count = 0;
         while (pos != std::string::npos) {
             count++;
             pos = data.find(kw1, pos + 1);
         }
-         
+
+        // Add kw to scripts_kws for each occurrence of kw1 in data
         for (int i = 0; i < count; i++) {
             scripts_kws.push_back(kw_no_spaces);
         }
@@ -335,7 +340,7 @@ int main() {
     // read all the files in a directory
     // open a file to write classification results
     std::ofstream outfile;
-    outfile.open("/Users/sashanksilwal/Developer/Capstone/Phase2_ComparingOutputs_Benchmarking/c++_output3.csv");
+    outfile.open("/Users/sashanksilwal/Developer/Capstone/Phase2_ComparingOutputs_Benchmarking/c++_output.csv");
 
     std::string path = "/Users/sashanksilwal/Developer/Capstone/Phase1_CreatingAModel/JS/";
     std::vector<std::string> files;
@@ -413,7 +418,7 @@ int main() {
         
         
     }
-   cout << "Total time taken for inference: " << total_time << " s\n";
+    cout << "Total time taken for inference: " << total_time << " s\n";
     outfile.close();
     return 0;
 

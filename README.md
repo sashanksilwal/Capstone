@@ -28,6 +28,8 @@ The project is divided into three parts:
 
 ### Prerequisites
 
+Check each of the phase directories for the prerequisites. The prerequisites are different for each phase.
+
 ### Installation
 
 1. Clone the repo
@@ -35,6 +37,10 @@ The project is divided into three parts:
 ```sh
 git clone
 ```
+
+### Usage
+
+Check each of the phase directories for the usage.
 
 ## Project Instructions
 
