@@ -18,5 +18,8 @@ This code loads and runs two machine learning models using the ONNX Runtime libr
 
 To run the code, use the follwoing command:
 
+```
 make
+
 ./script_classifier
+```
