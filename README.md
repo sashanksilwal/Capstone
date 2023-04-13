@@ -1,5 +1,8 @@
 # Capstone
 
+### [Link to browser code](https://github.com/sashanksilwal/browser)
+
+
 How can we implement an in-build javascript classification model into a mobile browser to accelerate mobile web pages?
 
 ## Table of Contents
@@ -49,3 +52,4 @@ Check each of the phase directories for the usage.
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
+
