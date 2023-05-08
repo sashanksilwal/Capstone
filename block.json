@@ -1,5 +1,0 @@
-{
-    "http://www.example.com/js/jquery.js":"required",  
-    "http://www.example.com/js/jquery-ui.js":"not_required"
-}
-
