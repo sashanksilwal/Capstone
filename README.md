@@ -2,6 +2,9 @@
 
 ### [Link to browser code](https://github.com/sashanksilwal/browser)
 
+### [Link to DuckDuckGo browser code]([https://github.com/sashanksilwal/browser](https://github.com/sashanksilwal/duck_browser)
+
+
 
 How can we implement an in-build javascript classification model into a mobile browser to accelerate mobile web pages?
 
